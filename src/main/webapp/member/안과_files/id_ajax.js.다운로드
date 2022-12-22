@@ -1,0 +1,250 @@
+/* 정보동의 체크 */
+$(document).ready(function(){
+	$('#agree_all').click(function(){
+		if($(this).prop('checked')==true){
+			$('.memchk_agree').each(function(){
+				$(this).prop('checked',true);
+			});
+		}else{
+			$('.memchk_agree').each(function(){
+				$(this).prop('checked',false);
+			});
+		}
+	});
+});
+/* 정보동의 체크 */
+
+/* 폼값체크 */
+function formcheck(cf) {
+
+	if(!cf.agreecheck1.checked) {alert("회원약관에 동의 하여 주세요."); cf.agreecheck1.focus(); return false; }
+	if(!cf.agreecheck3.checked) {alert("가입 필수 정보에 동의 하여 주세요."); cf.agreecheck3.focus(); return false; }
+
+	if (cf.name.value =="" || cf.name.value =="작성자") {
+		alert("이름를 입력하여 주세요.");
+		cf.name.focus();
+		return false;
+	}
+
+	if (cf.id.value =="" || cf.id.value =="아이디") {
+		alert("아이디를 입력하여 주세요.");
+		cf.id.focus();
+		return false;
+	}
+	if(!id_check(cf.id)) {
+		cf.id.focus();
+		return false;
+	}
+
+	if(!cf.pw.value || cf.pw.value =="") {
+		alert('비밀번호를 입력하세요!');
+		cf.pw.focus();
+		return false;
+	}
+
+	if(!cf.pw2.value || cf.pw2.value =="") {
+		alert('비밀번호를 입력하세요!');
+		cf.pw2.focus();
+		return false;
+	}
+
+	if(cf.pw.value != cf.pw2.value) {
+		alert('비밀번호가 일치하지 않습니다!');
+		cf.pw2.focus();
+		return false;
+	}
+
+	if(!cf.email.value || cf.email.value =="@ 이메일") {
+		alert('이메일을 입력하세요!');
+		cf.email.focus();
+		return false;
+	}
+
+/*
+	if(!AllowNum(cf.pw)) {
+		alert("비밀번호는 영숫자만 사용할 수 있습니다.");
+		cf.pw.focus();
+		return false;
+	}
+	*/
+
+	if(!checkLength(cf.pw, 8)) {
+		alert("비밀번호는 8자 이상이어야 합니다.");
+		cf.pw.focus();
+		return false;
+	}
+	if(!check(cf.pw)) {
+		cf.pw.focus();
+		return false;
+	}
+
+	return true;
+}
+/* 폼값체크 */
+
+/* 아이디 영문 숫자만 */
+function id_check(o) {
+
+	var regId = /^[A-Za-z0-9]*$/;
+
+	if(!regId.test(o.value)) {
+
+		alert('영문과 숫자 입력하세요.');
+
+		o.focus();
+
+		return false;
+
+	}
+
+	return true;
+
+}
+/* 아이디 영문 숫자만 */
+
+
+function check(str) {
+	var len = str.value ;
+	p_id   = str.value;
+	if(/[0-9]+/.test(p_id) == false ){
+		alert("영문과 숫자를 혼용하여 주십시오.");
+		str.focus();
+		return false;
+	}
+	if(/[a-zA-Z]+/.test(p_id) == false ){
+		alert("영문과 숫자를 혼용하여 주십시오.");
+		str.focus();
+		return false;
+	}
+	if(/[~!@\#$%<>^&*\()\-=+_\’]+/.test(p_id) == false ){
+		alert("영문,숫자,특수문자를 혼용하여 주십시오.");
+		str.focus();
+		return false;
+	}
+	if(/[\s]+/.test(p_id) == true){
+		alert("빈칸이 있습니다.");
+		str.focus();
+		return false;
+	}
+	return true;
+}
+
+/*영문 숫자*/
+function AllowNum(str)	{
+	var len = 0;
+	var code = "1234567890ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+
+	for (var i=0; i<str.value.length; i++){
+		var ch = str.value.charAt(i);
+		if (code.indexOf(ch)<0){
+			str.value = "";
+			return false;
+		}
+	}
+	return true;
+}
+/*영문 숫자*/
+
+/*패스워드 몇자이상*/
+function checkLength (theField, Length){
+	if (theField.value.length < Length  )	{
+		theField.select();
+		return(false);
+	}
+	return(true);
+}
+/*패스워드 몇자이상*/
+
+
+
+/*패스워드 일치 체크*/
+
+	function passwordCheckk(){
+
+		var password = document.getElementById("pw").value;
+		var passwordCheck = document.getElementById("pw2").value;
+
+		if ( passwordCheck == "")
+					{
+						   document.getElementById("pw_chk_msg").innerHTML = "" }
+					 else if ( password != passwordCheck )
+		{
+			document.getElementById("pw_chk_msg").innerHTML = "<span class='its_not'>비밀번호가 일치하지 않습니다. ( X )</span>"
+		}
+		else
+		{
+			document.getElementById("pw_chk_msg").innerHTML = "<span class='its_ok'>비밀번호가 일치합니다. ( O )</span>"
+		}
+
+	}
+/*패스워드 일치 체크*/
+
+$(document).ready(function(){
+	$('#chk_id').blur(function(){ check_id($(this).val()); });
+	$('#chk_email').blur(function(){ check_email($(this).val()); });
+});
+
+/*아이디 중복 체크*/
+	function check_id(id){
+
+		id=$.trim(id).replace(/ /g,'');
+
+		if(!id){
+			$('#chk_id').val('');
+		}else{
+
+			$.ajax({
+				type:"post",
+				url : "/ammember/skin/member_skin/id_chk_ajax.php",
+				data:{ id : id },
+				success : function(result){
+					if(result==1){
+						$('#id_chk_msg').html('<span class="its_not">사용할 수 없는 아이디 입니다. ( X )</span>');
+						$('#chk_id').val('').focus();
+					}else{
+						$('#id_chk_msg').html('<span class="its_ok">사용할 수 있는 아이디 입니다. ( O )</span>');
+					}
+				}
+			});
+
+		}
+	}
+/*아이디 중복 체크*/
+
+/*이메일 중복 체크*/
+	function check_email(email){
+
+		email=$.trim(email).replace(/ /g,'');
+
+		var regExp = /[0-9a-zA-Z][_0-9a-zA-Z-]*@[_0-9a-zA-Z-]+(\.[_0-9a-zA-Z-]+){1,2}$/;
+
+		if (!email.match(regExp)){
+			$('#email_chk_msg').html('<span class="its_not">이메일 형식이 올바르지 않습니다.( X )</span>');
+			$('#chk_email').val('');
+			return false;
+		}
+
+		if(!email){
+			$('#chk_email').val('');
+		}else{
+
+			$.ajax({
+				type:"post",
+				url : "/ammember/skin/member_skin/email_chk_ajax.php",
+				data:{ email : email },
+				success : function(result){
+					if(result==1){
+						$('#email_chk_msg').html('<span class="its_not">사용할 수 없는 이메일 입니다. ( X )</span>');
+						$('#chk_email').val('').focus();
+					}else{
+						$('#email_chk_msg').html('<span class="its_ok">사용할 수 있는 이메일 입니다.( O )</span>');
+					}
+				}
+			});
+
+		}
+
+
+	}
+/*이메일 중복 체크*/
+
