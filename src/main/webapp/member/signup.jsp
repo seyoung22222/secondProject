@@ -48,8 +48,8 @@
 <script type="text/javascript" src="./회원가입_files_files/id_ajax.js.다운로드"></script>
 
 		<div class="member_login_wrap">
-			<form name="mform" method="post" enctype="multipart/form-data" 
-				action="http://www.ssgeye.com/member/join.php" onsubmit="return formcheck(this)">
+			<form name="mform" method="post"
+				action="./signupProcess.jsp" onsubmit="return formcheck(this)">
 				<input type="hidden" name="adminretuen_url" value="/member/join.php">
 				<input type="hidden" name="adminreturn_value" value="group=basic|m1=|m2=join">
 				<input type="hidden" name="group" value="basic">
@@ -84,12 +84,6 @@
 						</colgroup>
 						<tbody>
 							<tr>
-								<th><span>(　<strong>*</strong>)</span> 이름</th>
-								<td>
-									<input type="text" id="name" name="name" maxlength="20" class="join_text join_name" value="">
-								</td>
-							</tr>
-							<tr>
 								<th><span>(　<strong>*</strong>)</span> 아이디</th>
 								<td>
 									<input type="text" name="id" maxlength="20" class="join_text join_id" value="" id="chk_id">
@@ -104,33 +98,20 @@
 								</td>
 							</tr>
 							<tr>
-								<th><span>(　<strong>*</strong>)</span> 비밀번호 확인</th>
+								<th><span>(　<strong>*</strong>)</span>  비밀번호 확인</th>
 								<td>
 									<input type="password" id="pw2" name="pw2" class="join_text join_passwd" onkeyup="passwordCheckk()">
 									<span id="pw_chk_msg"></span>
+									
 								</td>
 							</tr>
 							<tr>
-								<th><span>(　<strong>*</strong>)</span> 이메일</th>
+								<th><span>(　<strong>*</strong>)</span> 이름</th>
 								<td>
-									<input type="text" id="chk_email" name="email" maxlength="30" class="join_text join_email" value="">
-									@
-									<select class="join_text join_email " id="chk_email2" name="emailaddr">
-										<option value="naver">naver.com</option>
-										<option value="daum">daum.net</option>
-										<option value="nate">nate.com</option>
-										<option value="google">google</option>
-									</select>
-									<span class="input_explain">
-										<label for="join_email_chk">
-											<input type="checkbox" name="infomail" value="1" id="join_email_chk" class="join_email_chk" checked="">
-											이메일수신
-										</label>
-										Ex) abcde@abcd.com
-									</span>
-									<span id="email_chk_msg"></span>
+									<input type="text" id="name" name="name" maxlength="20" class="join_text join_name" value="">
 								</td>
 							</tr>
+							 
 							<tr>
 								<th><span>(　<strong>*</strong>)</span> 연락처</th>
 								<td>
@@ -150,6 +131,25 @@
 										<label for="join_sms_chk">
 											<input type="checkbox" name="infosms" value="1" id="join_sms_chk" class="join_sms_chk" checked="">
 											문자수신
+										</label>
+									</span>
+								</td>
+							</tr>
+							<tr>
+								<th>&ensp;&ensp;&ensp; 이메일</th>
+								<td>
+									<input type="text" id="" name="email" maxlength="30" class="join_text join_email" >
+									@
+									<select class="join_text join_email" id="chk_email" name="emailaddr">
+										<option value="naver">naver.com</option>
+										<option value="daum">daum.net</option>
+										<option value="nate">nate.com</option>
+										<option value="google">google</option>
+									</select>
+									<span class="input_explain">
+										<label for="join_email_chk">
+											<input type="checkbox" name="infomail" value="1" id="join_email_chk" class="join_email_chk" checked="">
+											이메일수신
 										</label>
 									</span>
 								</td>

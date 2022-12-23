@@ -56,4 +56,28 @@ public class MemberDAO  extends JDBConnect{
 		//호출한 지점으로 DTO객체를 반환한다.
 		return dto;
 	}
+	
+	public int insertMember(MemberDTO dto) {
+		int result = 0;
+		
+		try {
+			String query = "INSERT INTO member (id, pass, NAME, phone, email) "
+					+ "	VALUES (? , ? , ? , ?, 'abcbf@naver.com')";
+			
+			psmt = con.prepareStatement(query);
+			psmt.setString(1, dto.getId());
+			psmt.setString(2, dto.getPass());
+			psmt.setString(3, dto.getName());
+			psmt.setString(4, dto.getPhone());
+			/* psmt.setString(5, dto.getEmail()); */
+			
+			result = psmt.executeUpdate();
+			
+		}
+		catch (Exception e) {
+			System.out.println("회원가입 중 예외 발생");
+			e.printStackTrace();
+		}
+		return result;
+	}
 }

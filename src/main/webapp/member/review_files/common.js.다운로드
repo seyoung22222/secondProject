@@ -1,0 +1,554 @@
+function ready() {
+	alert("준비중 입니다.");
+}
+
+
+$(document).ready(function () {
+
+	/* 의료진소개 스크립트 */
+	$(".sub_doc_list_inner > div").eq(0).addClass("active");
+	$(".sub_b_doc_wrap > .b_doc_section").eq(0).show();
+	$(".sub_doc_list_inner > div").click(function(){
+		var idx = $(".sub_doc_list_inner > div").index(this);
+		$(".sub_doc_list_inner > div").removeClass("active");
+		$(".sub_doc_list_inner > div").eq(idx).addClass("active");
+		$(".sub_b_doc_wrap > .b_doc_section").hide();
+		$(".sub_b_doc_wrap > .b_doc_section").eq(idx).show();
+	});
+
+	$(".intro02_b_yak_second").slideUp();
+	$(".intro02_b_yak_btn").click(function(){
+		$(".intro02_b_yak_second").slideToggle();
+	});
+
+	$(".mb03_slide_inner").slick({
+		//vertical:true,		//버티컬효과
+		fade: false,				//페이드효과
+		accessibility:false, //접근성
+		arrows:true, //좌,우 버튼
+		infinite:true, //슬라이드 루프 끝번호에서 다시 첫번째로 가도록
+		//settings:"unslick",	//루프 끝에서 좌우 버튼 동작안하도록
+		autoplay:true,
+		autoplaySpeed:4000, //자동재생속도
+		speed:600, //슬라이드 속도
+		slidesToShow: 3,
+		slidesToScroll: 1,
+		variableWidth:true,
+		adaptiveHeight:true,
+			
+		dots:false
+	});
+
+	//* 상단이동 스크립트
+	$(".direct_top").click(function(){
+		$("html, body").animate({"scrollTop":"0"},600);
+	});
+	//*/
+
+	$('.btn_all_menu').on('click',function(e){
+		e.preventDefault();
+		$(this).toggleClass('on');
+		if($(this).hasClass('on')){
+			$('.all_menu_wrap').show();
+			$('.all_menu_dimmed').show();
+			$('body').addClass('nav-active');
+		}else{
+			$('.all_menu_wrap').hide();
+			$('.all_menu_dimmed').hide();
+			$('body').removeClass('nav-active');
+		}
+	});
+	$('.all_menu_dimmed').on('click',function(){
+		$('.btn_all_menu').removeClass('on');
+		$('.all_menu_wrap').hide();
+		$('body').removeClass('nav-active');
+		$(this).hide();
+	});
+	
+	$('.foo_rl > div').eq(0).css({'z-index':'9'});
+	$('.foo_map > ul > li').eq(0).addClass('bg_b');
+	
+	$('.foo_map > ul > li').click(function(){
+		var now = $(this).index();
+		//alert(now);
+		$('.foo_rl > div').css({'z-index':'0'});
+		$('.foo_rl > div').eq(now).css({'z-index':'9'});
+		$('.foo_map > ul > li').removeClass('bg_b');
+		$(this).addClass('bg_b');
+	});
+
+
+	//* 메인비주얼
+	$(".mv_inner").on('init', function(event, slick) {
+		$(".visual_txt_wrap").eq(1).addClass("vis_on");
+	});
+
+	$(".mv_inner").slick({
+		//vertical:true,		//버티컬효과
+		//fade: true,			//페이드효과
+		accessibility:false, //접근성
+		arrows:false, //좌,우 버튼
+		dots:true, // 페이지 (동그라미)
+		/*
+		customPaging: function(slick,index) { //커스텀페이징 01 , 02 방식의 표현
+			var thumbnum = index+1;
+			return '<span></span><strong>'+'0'+thumbnum+'</strong>';
+		},
+		*/
+		/*
+		customPaging: function (slider, i) { //커스텀페이징 토탈 넘버링 방식의 표현
+           console.log(slider);
+           return '<strong>'+(i + 1) + '</strong> <span> / ' + slider.slideCount+'</span>';
+       },
+	   */
+		//settings:"unslick",	//루프 끝에서 좌우 버튼 동작안하도록
+		infinite:true, //슬라이드 루프 끝번호에서 다시 첫번째로 가도록
+		autoplay:true, //자동재생
+		autoplaySpeed:3000, //자동재생속도
+		speed:600, //슬라이드 속도
+		slidesToShow:1, // 슬라이드 보여지는 갯수
+		slidesToScroll:1, //슬라이드 이동 갯수
+		pauseOnFocus:true,	//슬라이드 마우스 진입 false=슬라이딩 / true=멈춤
+		pauseOnHover:true,	//슬라이드 마우스 진입 false=슬라이딩 / true=멈춤
+		//centerMode: true,	//센터모드
+		adaptiveHeight:true
+	}).on('beforeChange', function(event, slick, currentSlide, nextSlide){
+		//console.log(currentSlide);
+		//alert(currentSlide);
+	}).on('afterChange', function(event, slick, currentSlide, nextSlide){
+		var current = currentSlide +1
+		$(this).find(".visual_txt_wrap").removeClass("vis_on");
+		$(this).find(".visual_txt_wrap").eq(current).addClass("vis_on");
+	});
+
+	$(".mb06_slide").slick({
+		//vertical:true,		//버티컬효과
+		fade: false,				//페이드효과
+		accessibility:false, //접근성
+		arrows:true, //좌,우 버튼
+		infinite:true, //슬라이드 루프 끝번호에서 다시 첫번째로 가도록
+		//settings:"unslick",	//루프 끝에서 좌우 버튼 동작안하도록
+		autoplay:true,
+		autoplaySpeed:4000, //자동재생속도
+		speed:900, //슬라이드 속도
+		slidesToShow: 1,
+		slidesToScroll: 1,
+		adaptiveHeight:true,
+			
+		dots:false
+	});
+		$(".mb06_slide_2").slick({
+		//vertical:true,		//버티컬효과
+		fade: false,				//페이드효과
+		accessibility:false, //접근성
+		arrows:true, //좌,우 버튼
+		infinite:true, //슬라이드 루프 끝번호에서 다시 첫번째로 가도록
+		//settings:"unslick",	//루프 끝에서 좌우 버튼 동작안하도록
+		autoplay:true,
+		autoplaySpeed:4000, //자동재생속도
+		speed:900, //슬라이드 속도
+		slidesToShow: 1,
+		slidesToScroll: 1,
+		adaptiveHeight:true,
+			
+		dots:false
+	});
+
+	var go_to_slide = $(".mb98_n_inner").slick({
+		//vertical:true,		//버티컬효과
+		//fade: true,				//페이드효과
+		accessibility:false, //접근성
+		arrows:true, //좌,우 버튼
+		infinite:true, //슬라이드 루프 끝번호에서 다시 첫번째로 가도록
+		//settings:"unslick",	//루프 끝에서 좌우 버튼 동작안하도록
+		autoplay:true,
+		autoplaySpeed:2000, //자동재생속도
+		speed:600, //슬라이드 속도
+		slidesToShow: 1,
+		slidesToScroll: 1,
+		adaptiveHeight:true,
+		dots:true
+	});
+	go_to_slide.slick('slickGoTo', 1, true ); //원하는 순번으로 로딩
+
+
+
+	$(".mb99_n_inner").slick({
+		//vertical:true,		//버티컬효과
+		fade: true,				//페이드효과
+		accessibility:false, //접근성
+		arrows:true, //좌,우 버튼
+		infinite:true, //슬라이드 루프 끝번호에서 다시 첫번째로 가도록
+		//settings:"unslick",	//루프 끝에서 좌우 버튼 동작안하도록
+		autoplay:true,
+		autoplaySpeed:2000, //자동재생속도
+		speed:600, //슬라이드 속도
+		slidesToShow: 1,
+		slidesToScroll: 1,
+		adaptiveHeight:true,
+		dots:true,
+		customPaging: function(slick,index) { //커스텀페이징
+			var alttxt = slick.$slides.eq(index).find('img').attr('alt');
+			return '<span>'+alttxt+'</span>';
+		}
+	});
+
+
+	//* 메인배너 슬라이딩
+	 $(".mb03_inner").slick({
+		 //vertical:true,		//버티컬효과
+		//fade: true,	//페이드효과
+		accessibility:false, //접근성
+		arrows:true, //좌,우 버튼
+		dots:false, // 페이지 (동그라미)
+		infinite:true, //슬라이드 루프 끝번호에서 다시 첫번째로 가도록
+		//settings:"unslick",	//루프 끝에서 좌우 버튼 동작안하도록
+		autoplay:true, //자동재생
+		autoplaySpeed:3000, //자동재생속도
+		speed:500, //슬라이드 속도
+		slidesToShow:4, // 슬라이드 보여지는 갯수
+		slidesToScroll:1, //슬라이드 이동 갯수
+		//centerMode: true,	//센터모드
+		variableWidth:false, //배너넓이값 자동여부 -> true : 원본사이즈 / false : 부모넓이에 따른 평균값
+		adaptiveHeight:true
+	});
+
+	$(".mb05_inner").slick({
+		 //vertical:true,		//버티컬효과
+		//fade: true,	//페이드효과
+		accessibility:false, //접근성
+		arrows:true, //좌,우 버튼
+		dots:false, // 페이지 (동그라미)
+		infinite:true, //슬라이드 루프 끝번호에서 다시 첫번째로 가도록
+		//settings:"unslick",	//루프 끝에서 좌우 버튼 동작안하도록
+		autoplay:true, //자동재생
+		autoplaySpeed:3000, //자동재생속도
+		speed:500, //슬라이드 속도
+		slidesToShow:1, // 슬라이드 보여지는 갯수
+		slidesToScroll:1, //슬라이드 이동 갯수
+		//centerMode: true,	//센터모드
+		variableWidth:false, //배너넓이값 자동여부 -> true : 원본사이즈 / false : 부모넓이에 따른 평균값
+		adaptiveHeight:true
+	});
+
+	$(".visualacuity02_0108_inner").slick({
+		 //vertical:true,		//버티컬효과
+		fade: true,	//페이드효과
+		accessibility:false, //접근성
+		arrows:true, //좌,우 버튼
+		dots:false, // 페이지 (동그라미)
+		infinite:true, //슬라이드 루프 끝번호에서 다시 첫번째로 가도록
+		//settings:"unslick",	//루프 끝에서 좌우 버튼 동작안하도록
+		autoplay:true, //자동재생
+		autoplaySpeed:3000, //자동재생속도
+		speed:500, //슬라이드 속도
+		slidesToShow:1, // 슬라이드 보여지는 갯수
+		slidesToScroll:1, //슬라이드 이동 갯수
+		//centerMode: true,	//센터모드
+		variableWidth:false, //배너넓이값 자동여부 -> true : 원본사이즈 / false : 부모넓이에 따른 평균값
+		adaptiveHeight:true
+	});
+
+	$(".visualacuity04_0108_inner").slick({
+		//vertical:true,		//버티컬효과
+		fade: true,				//페이드효과
+		accessibility:false, //접근성
+		arrows:true, //좌,우 버튼
+		infinite:true, //슬라이드 루프 끝번호에서 다시 첫번째로 가도록
+		//settings:"unslick",	//루프 끝에서 좌우 버튼 동작안하도록
+		autoplay:true,
+		autoplaySpeed:2000, //자동재생속도
+		speed:600, //슬라이드 속도
+		slidesToShow: 1,
+		slidesToScroll: 1,
+		adaptiveHeight:true,
+		dots:true,
+		customPaging: function(slick,index) { //커스텀페이징
+			var alttxt = slick.$slides.eq(index).find('img').attr('alt');
+			return '<span>'+alttxt+'</span>';
+		}
+	});
+
+	$(".sub_roll_inner").slick({
+		//vertical:true,		//버티컬효과
+		fade: true,				//페이드효과
+		accessibility:false, //접근성
+		arrows:false, //좌,우 버튼
+		infinite:true, //슬라이드 루프 끝번호에서 다시 첫번째로 가도록
+		//settings:"unslick",	//루프 끝에서 좌우 버튼 동작안하도록
+		autoplay:false,
+		autoplaySpeed:2000, //자동재생속도
+		speed:600, //슬라이드 속도
+		slidesToShow: 1,
+		slidesToScroll: 1,
+		adaptiveHeight:true,
+		dots:true,
+		customPaging: function(slick,index) { //커스텀페이징
+			var alttxt = slick.$slides.eq(index).find('img').attr('alt');
+			return '<span>'+alttxt+'</span>';
+		}
+	});
+
+	$(".sub_roll_inner2").slick({
+		//vertical:true,		//버티컬효과
+		fade: true,				//페이드효과
+		accessibility:false, //접근성
+		arrows:false, //좌,우 버튼
+		infinite:true, //슬라이드 루프 끝번호에서 다시 첫번째로 가도록
+		//settings:"unslick",	//루프 끝에서 좌우 버튼 동작안하도록
+		autoplay:false,
+		autoplaySpeed:2000, //자동재생속도
+		speed:600, //슬라이드 속도
+		slidesToShow: 1,
+		slidesToScroll: 1,
+		adaptiveHeight:true,
+		dots:true,
+		customPaging: function(slick,index) { //커스텀페이징
+			var alttxt = slick.$slides.eq(index).find('img').attr('alt');
+			return '<span>'+alttxt+'</span>';
+		}
+	});
+
+	$(".intro03_roll_inner").slick({
+		//vertical:true,		//버티컬효과
+		//fade: true,				//페이드효과
+		accessibility:false, //접근성
+		arrows:false, //좌,우 버튼
+		infinite:true, //슬라이드 루프 끝번호에서 다시 첫번째로 가도록
+		//settings:"unslick",	//루프 끝에서 좌우 버튼 동작안하도록
+		autoplay:false,
+		autoplaySpeed:2000, //자동재생속도
+		speed:600, //슬라이드 속도
+		slidesToShow: 1,
+		slidesToScroll: 1,
+		adaptiveHeight:true,
+		dots:true,
+		customPaging: function(slick,index) { //커스텀페이징
+			var alttxt = slick.$slides.eq(index).find('img').attr('alt');
+			return '<span>'+alttxt+'</span>';
+		}
+	});
+	 //*/
+
+
+
+	//* bx메인비주얼
+	var mv_auto_bxslider = $('.bx_mv_inner').bxSlider({
+		mode: 'horizontal',
+		controls:true,
+		auto:true,
+		pager:true,
+		//pagerCustom: '#mv-bx-pager',
+		adaptiveHeight: true,
+		pause:5000,
+		touchEnabled:true,
+		onSliderLoad: function () {
+			$('.bx_mv_wrap .bx-pager a, .bx_mv_wrap .bx-next , .bx_mv_wrap .bx-prev').click(function () {
+				var mv_vis = $(this).data('slide-index');
+				mv_auto_bxslider.goToSlide(mv_vis);
+				mv_auto_bxslider.stopAuto();
+				mv_auto_bxslider.startAuto();
+				return false;
+			});
+		}
+	});
+	//*/
+
+	//* bx메인배너 좌우이동
+	var mb01_auto_bxslider = $('.bx_mb98_inner').bxSlider({
+		slideWidth: 200,
+		minSlides: 1,
+		maxSlides: 6,
+		moveSlides: 1,
+		slideMargin:20,
+		controls:true,
+		auto:false,
+		pager:false,
+		pause:3000
+	});
+	//*/
+
+	//* bx메인배너 상하이동
+	var mbv01_auto_bxslider = $('.bx_vertical_inner').bxSlider({
+		mode: 'vertical',
+		slideWidth: 380,
+		minSlides:1,
+		maxSlides:3,
+		moveSlides: 1,
+		slideMargin: 0,
+		controls:true,
+		auto:true,
+		pager:false,
+		adaptiveHeight: true,
+		touchEnabled:true
+	});
+	//*/
+	/* 메인배너 상하이동 */
+
+	/* 카카오맵 스크롤시 줌/인 방지 스크립트 */
+	$(".root_daum_roughmap").click(function(){
+		$(".root_daum_roughmap").addClass("changed");
+	});
+
+	/* 해당 아이콘 마우스 hover시 이미지 변경 js */
+	$('.visualacuity02_0107_wrap li img').mouseover(function() {
+		$(this).attr('src',$(this).attr('src').replace(".jpg","_ov.png"));
+	});
+
+	$('.visualacuity02_0107_wrap li img').mouseleave(function() {
+		$(this).attr('src',$(this).attr('src').replace("_ov.png",".jpg"));
+	});
+
+	$('.eyedisease03_0107_wrap li img').mouseover(function() {
+		$(this).attr('src',$(this).attr('src').replace(".jpg","_ov.jpg"));
+	});
+
+	$('.eyedisease03_0107_wrap li img').mouseleave(function() {
+		$(this).attr('src',$(this).attr('src').replace("_ov.jpg",".jpg"));
+	});
+
+	$('.sns_animate li a img').mouseover(function() {
+		$(this).attr('src',$(this).attr('src').replace(".png","_on.png"));
+	});
+
+	$('.sns_animate li a img').mouseleave(function() {
+		$(this).attr('src',$(this).attr('src').replace("_on.png",".png"));
+	});
+	/* 해당 아이콘 마우스 hover시 이미지 변경 js */
+
+	/*즐겨찾기*/
+	$('#bookmark').on('click', function(e) {
+		var bookmarkURL = window.location.href;
+		var bookmarkTitle = document.title;
+		var triggerDefault = false;
+
+		if (window.sidebar && window.sidebar.addPanel) {
+			// Firefox version < 23
+			window.sidebar.addPanel(bookmarkTitle, bookmarkURL, '');
+		} else if ((window.sidebar && (navigator.userAgent.toLowerCase().indexOf('firefox') > -1)) || (window.opera && window.print)) {
+			// Firefox version >= 23 and Opera Hotlist
+			var $this = $(this);
+			$this.attr('href', bookmarkURL);
+			$this.attr('title', bookmarkTitle);
+			$this.attr('rel', 'sidebar');
+			$this.off(e);
+			triggerDefault = true;
+		} else if (window.external && ('AddFavorite' in window.external)) {
+			// IE Favorite
+			window.external.AddFavorite(bookmarkURL, bookmarkTitle);
+		} else {
+			// WebKit - Safari/Chrome
+			alert((navigator.userAgent.toLowerCase().indexOf('mac') != -1 ? 'Cmd' : 'Ctrl') + '+D 키를 눌러 즐겨찾기에 등록하실 수 있습니다.');
+		}
+		return triggerDefault;
+	});
+	/*즐겨찾기*/
+
+});
+function checkForm_cb_foot(cf){
+	if(cf.cate2.value=="") {
+		alert("지점을 선택해 주세요");
+		// cf.cate2.focus();
+		return false;
+	}
+	if(cf.cate1.value=="") {
+		alert("상담받을 과목을 선택해 주세요");
+		cf.cate1.focus();
+		return false;
+	}
+
+	if(cf.name.value=="") {
+		alert("이름을 입력하세요");
+		cf.name.focus();
+		return false;
+	}
+
+	if(cf.hphoneall.value=="") {
+		alert("연락처를 입력하세요");
+		cf.hphoneall.focus();
+		return false;
+	}
+
+
+	/*
+	if(cf.hphone1.value=="") {
+		alert("휴대전화번호를 입력하세요");
+		cf.hphone1.focus();
+		return false;
+	}
+
+	if(cf.hphone2.value=="") {
+		alert("휴대전화번호를 입력하세요");
+		cf.hphone2.focus();
+		return false;
+	}
+
+	if(cf.hphone3.value=="") {
+		alert("휴대전화번호를 입력하세요");
+		cf.hphone3.focus();
+		return false;
+	}
+
+	if(cf.contents.value=="") {
+		alert("내용을 입력하세요");
+		cf.contents.focus();
+		return false;
+	}
+	*/
+
+	if(!cf.privacy.checked){
+		alert("개인정보수집 및 이용안내에 동의해 주시기 바랍니다.");
+		return false;
+	}
+}
+function checkForm_cb2(cf) {
+	if(cf.cate1.value=="") {
+		alert("상담받을 과목을 선택해 주세요");
+		cf.cate1.focus();
+		return false;
+	}
+
+	if(cf.name.value=="") {
+		alert("이름을 입력하세요");
+		cf.name.focus();
+		return false;
+	}
+
+	if(cf.hphoneall.value=="") {
+		alert("연락처를 입력하세요");
+		cf.hphoneall.focus();
+		return false;
+	}
+
+	/*
+	if(cf.hphone1.value=="") {
+		alert("휴대전화번호를 입력하세요");
+		cf.hphone1.focus();
+		return false;
+	}
+
+	if(cf.hphone2.value=="") {
+		alert("휴대전화번호를 입력하세요");
+		cf.hphone2.focus();
+		return false;
+	}
+
+	if(cf.hphone3.value=="") {
+		alert("휴대전화번호를 입력하세요");
+		cf.hphone3.focus();
+		return false;
+	}
+
+	if(cf.contents.value=="") {
+		alert("내용을 입력하세요");
+		cf.contents.focus();
+		return false;
+	}
+	*/
+
+	if(!cf.privacy.checked){
+		alert("개인정보수집 및 이용안내에 동의해 주시기 바랍니다.");
+		return false;
+	}
+	return true;
+}

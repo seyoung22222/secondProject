@@ -1,0 +1,56 @@
+// 숫자만 
+function onlyNumber(obj) {
+	var exp = /[^0-9]/g;
+	if ( exp.test(obj.value) ) {
+		alert("숫자만 입력가능합니다.");
+		obj.value = "";
+		obj.focus();
+	}
+}
+
+//모바일 number maxlength 체크
+function maxLengthCheck(object){
+	if (object.value.length > object.maxLength){
+		object.value = object.value.slice(0, object.maxLength);
+	}
+}
+
+function GetAJAX( sURL, sParams, sTarget)
+{
+	( typeof sTarget == 'undefined') ? sTarget = "" : sTarget;		// 자바스크립트에서 디폴트 값 넣기 위해 사용
+	var sRet = "";
+
+	sParams = encodeURI( sParams);
+
+	// AJAX 동기식으로 변경 (없으면 정상적인 결과 안나옴)
+	$.ajaxSetup({	async:false	});
+	$.ajaxSetup({ cache:false });
+
+	var jqxhr = $.get( sURL, 
+				 sParams,
+				 function( data) {
+		sRet = data;
+	})
+	.done(function(data) { sRet = data; })
+	.fail(function() { sRet = "ERROR";})
+	.always(function( data) { ; });
+
+	// AJAX 원래대로 비동기식으로 변경
+	$.ajaxSetup({ async:true });
+
+	if( sRet == "" || sRet == "ERROR" ) {
+		alert( "ERROR - GetAJAX()");
+		return "ERROR";
+	}
+
+	if( sTarget != "") {
+		//익스플로어8에서는 SelectBox에서 innerHTML이 적용이 안됨 제이쿼리 html로 바꿔놓음
+		$('#' + sTarget).html(sRet);
+		/*
+		var objDIV = document.getElementById( sTarget);
+		objDIV.innerHTML = sRet;
+		*/
+	} else {
+		return sRet;
+	}
+}

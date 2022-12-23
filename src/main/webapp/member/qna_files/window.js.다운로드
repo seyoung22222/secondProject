@@ -1,0 +1,121 @@
+// 아이프래임
+function iframe_autoresize(arg) {
+    arg.height = eval(arg.name+".document.body.scrollHeight");
+}
+
+// 공지 팝업창을 띄운다.
+function popUpWindow(htmlvalue,names, width, Height, top, left, scrollbar,resizable) { 
+	if(top == "") top='0';
+	if(left == "") left='0';
+	if(scrollbar == "") scrollbar='no';
+	if(resizable == "") resizable='no';
+	window.open (htmlvalue, names, "scrollbars="+ scrollbar+", resizable="+ resizable+", width=" + width + ", height=" + Height + ",top=" + top + ",left=" + left + ", toolbar=no, location=no, directories=no, status=no, copyhistory=no, menubar=no");
+}
+
+// Get 방식으로 사이트를 이동 시켜준다.
+function goURL(gURL,message) {
+	
+	if(message != "") {
+		if(confirm(message)) {
+			location.href=gURL;
+			return;
+		} else {
+			return;
+		}
+	}
+	
+	document.location=gURL;
+}
+
+
+// Post 방식으로 사이트를 이동 시켜준다.
+function goURLPost(gURL,message) {
+	
+	if(message != "") {
+		if(confirm(message)) {
+			postFormAction(gURL);
+			return;
+		} else {
+			return;
+		}
+	}
+	postFormAction(gURL);
+}
+
+// Get 방식의 URL 을 분석하여 Post 방식의 Form 으로 전송한다.
+function postFormAction(gURL) {
+	tempgURL_array = gURL.split("?");	// 사이트 URL 과 파라메타변수를 분리한다.
+	tmpURL = tempgURL_array[0];		// 사이트 URL
+	tmpPara = tempgURL_array[1];	// 파라메타변수
+	writeform = "<meta http-equiv='Content-Type' content='text/html; charset=utf-8'>";
+	writeform = writeform + "<form name='autopost_form' action='"+tmpURL+"' method='post'>\n";
+	if(tmpPara != "" && tmpPara != null) {
+		tmpPara_array = tmpPara.split("&");	// 파라메타변수 배열
+		for(i=0;tmpPara_array.length > i;i++) {
+			para = tmpPara_array[i];
+			para_array = para.split("=");	// 파라메타의 이름과 값을 나눈다.
+			writeform = writeform + "<input type='hidden' name='"+para_array[0]+"' value='"+para_array[1]+"'>\n";
+		}
+	}
+	writeform = writeform + "</form>\n";
+	writeform = writeform + "<script>document.autopost_form.submit();</script>\n";
+	
+	document.write(writeform);
+}
+
+
+/*
+이미지를 팝업으로 뛰우고 창보다 이미지가 클경우 드래그하여 보기가 가능하다.
+imgpath : 이미지 경로
+wintitle : 이미지 팝업창의 타이틀 이름
+*/
+function popupImageView(imgpath,wintitle) {
+	// 이미지 정보를 가져오기위한 이미지객체 생성
+	var imageobj = new Image();
+	imageobj.src = imgpath;
+	
+	img_width = imageobj.width;
+	img_height = imageobj.height;
+	
+	
+	winhtml = "<html>";
+	winhtml += "<head>";
+	winhtml += "<title>" + wintitle + "</title>";
+	winhtml += "<script>";
+	winhtml += "function winResize(){";
+	winhtml += "	var bodyobj=document.body;";
+	winhtml += "	var imageobj = document.images[0];";
+	winhtml += "	img_width = imageobj.width;";
+	winhtml += "	img_height = imageobj.height;";
+	winhtml += "	rewidth=img_width-bodyobj.clientWidth;";
+	winhtml += "	reheight=img_height-bodyobj.clientHeight-15;";
+	winhtml += "	window.resizeBy(rewidth,reheight);";
+	winhtml += "}";
+	winhtml += "\n";
+	winhtml += "var sx=0;";
+	winhtml += "var sy=0;";
+	winhtml += "document.onmousedown = dset;";
+	winhtml += "function dset() {";
+	winhtml += "	sx = event.x;";
+	winhtml += "	sy = event.y;";
+	winhtml += "}";
+	winhtml += "\n";
+	winhtml += "function imgmove() {";
+	winhtml += "	dx = event.x;";
+	winhtml += "	dy = event.y;";
+	winhtml += "	mx =  sx - dx;";
+	winhtml += "	my =  sy - dy;";
+	winhtml += "	sx =  dx;";
+	winhtml += "	sy =  dy;";
+	winhtml += "	window.scrollBy(mx,my);";
+	winhtml += "}";
+	winhtml += "</"+"script>";
+	winhtml += "</head>";
+	winhtml += "<body style='margin:0' Onload='winResize()'>";
+	winhtml += "<a style='cursor:move' Ondrag='imgmove();'><img src='" + imgpath + "' border=0 OnClick='window.close();'></a></body></html>";
+	
+	winobj = window.open("about:blank","","scrollbars=yes,status=yes,resizable=yes,width="+img_width+",height="+img_height+"");
+	winobj.document.open("text/html", "replace");
+	winobj.document.write(winhtml);
+	winobj.document.close();
+}

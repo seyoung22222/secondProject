@@ -113,10 +113,10 @@ $(document).ready(function(){
 					</div>
 				</li>
 				<li class="dep1">
-					<a href="">어린이 맞춤진료</a>
+					<a href="">맞춤진료</a>
 					<div class="dep2_wrap">
 						
-						<h3><a href="">어린이 맞춤진료</a></h3>
+						<h3><a href="">맞춤진료</a></h3>
 						<ul class="dep2">
 							<li><a href="">소아안과</a></li>
 							<li><a href="">약시치료</a></li>
@@ -125,24 +125,24 @@ $(document).ready(function(){
 					</div>
 				</li>
 				<li class="dep1">
-					<a href="">드림렌즈/ 시력 교정 클리닉</a>
+					<a href="">시력 교정 클리닉</a>
 					<div class="dep2_wrap">
 						
-						<h3><a href="">드림렌즈/ 시력 교정 클리닉</a></h3>
+						<h3><a href="">시력 교정</a></h3>
 						<ul class="dep2">
 							<li><a href="">IPL치료</a></li>
-							<li><a href="">눈물점 플러그 시술 |온열치료</a></li>
+							<li><a href="">눈물점 플러그 시술</a></li>
 						</ul>
 					</div>
 				</li>
 				<li class="dep1">
-					<a href="">게시판</a>
+					<a href="./qna_board.jsp">게시판</a>
 					<div class="dep2_wrap">
 						
-						<h3><a href="">게시판</a></h3>
+						<h3><a href="./qna_board.jsp">게시판</a></h3>
 						<ul class="dep2">
-							<li><a href="">진료후기</a></li>
-							<li><a href="">자주하는 질문/질문방</a></li>
+							<li><a href="./qna_board.jsp">자주하는 질문/질문방</a></li>
+							<li><a href="./review_board.jsp">진료후기</a></li>
 							<li><a href="">공지사항</a></li>
 						</ul>
 					</div>
