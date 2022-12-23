@@ -1,0 +1,25 @@
+
+// 쿠키를 생성한다.
+function setCookie( name, value, expires ){
+	var expdate = new Date();
+	expdate.setTime(expdate.getTime() + 1000 * expires); // expires = 3600 * 24 * 365 => 365일
+	document.cookie = name + "=" + escape( value ) + "; path=/; expires=" + expdate.toGMTString() + ";";
+}
+
+// 쿠키를 가져온다.
+function getCookie( name ){
+	var nameOfCookie = name + "=";
+	var x = 0;
+	while ( x <= document.cookie.length ) {
+		var y = (x+nameOfCookie.length);
+		if ( document.cookie.substring( x, y ) == nameOfCookie ) {
+			if ( (endOfCookie=document.cookie.indexOf( ";", y )) == -1 ) endOfCookie = document.cookie.length;
+			return unescape( document.cookie.substring( y, endOfCookie ) );
+		}
+		
+		x = document.cookie.indexOf( " ", x ) + 1;
+		
+		if ( x == 0 ) break;
+	}
+	return "";
+}

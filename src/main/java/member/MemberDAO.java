@@ -80,4 +80,19 @@ public class MemberDAO  extends JDBConnect{
 		}
 		return result;
 	}
+	
+	public int managerCheck(String str) {
+		int result =0;
+		try {
+			String query = "SELECT manager FROM member "
+					+ "WHERE id LIKE '"+ str +"'";
+			psmt = con.prepareStatement(query);
+			result = psmt.executeUpdate();
+		}
+		catch (Exception e) {
+			System.out.println("매니저 확인 중 예외 발생");
+			e.printStackTrace();
+		}
+		return result;
+	}
 }

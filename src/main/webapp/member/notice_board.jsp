@@ -1,3 +1,4 @@
+<%@page import="member.MemberDAO"%>
 <%@page import="board.boardDTO"%>
 <%@page import="java.util.List"%>
 <%@page import="java.util.HashMap"%>
@@ -9,8 +10,8 @@
 boardDAO dao = new boardDAO(application);
 
 Map<String, Object> param = new HashMap<String, Object>();
-int totalCount = dao.selectCount(param, "review");
-List<boardDTO> boardLists = dao.selectList(param, "review");
+int totalCount = dao.selectCount(param, "notice");
+List<boardDTO> boardLists = dao.selectList(param, "notice");
 dao.close();
 %>
 <!DOCTYPE html>
@@ -60,7 +61,7 @@ dao.close();
 
 <div class="sub_container_wrap">
 	<div class="sub_program_wrap">
-		<h3 class="program_title">진료 후기</h3>
+		<h3 class="program_title">공지사항</h3>
 <script language="JavaScript" src="./review_files/window.js.다운로드"></script>
 <script language="JavaScript" src="./review_files/document.js.다운로드"></script>
 <link type="text/css" rel="stylesheet" href="./review_files/hw_css.css">
@@ -159,7 +160,7 @@ dao.close();
 
 			<div class="newb_btn_wrap">
 				<a href="review_board.jsp" class="btn_write">목록</a>
-				<a href="./review_write.jsp" class="btn_write">글쓰기</a>
+				<a href="./notice_write.jsp" class="btn_write">글쓰기</a>
 			</div>
 		</form>
 

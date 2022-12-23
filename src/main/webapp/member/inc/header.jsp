@@ -136,14 +136,14 @@ $(document).ready(function(){
 					</div>
 				</li>
 				<li class="dep1">
-					<a href="./qna_board.jsp">게시판</a>
+					<a href="./qna_board2.jsp">게시판</a>
 					<div class="dep2_wrap">
 						
-						<h3><a href="./qna_board.jsp">게시판</a></h3>
+						<h3><a href="./qna_board2.jsp">게시판</a></h3>
 						<ul class="dep2">
-							<li><a href="./qna_board.jsp">자주하는 질문/질문방</a></li>
+							<li><a href="./qna_board2.jsp">자주하는 질문/질문방</a></li>
 							<li><a href="./review_board.jsp">진료후기</a></li>
-							<li><a href="">공지사항</a></li>
+							<li><a href="./notice_board.jsp">공지사항</a></li>
 						</ul>
 					</div>
 				</li>

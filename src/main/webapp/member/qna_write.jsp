@@ -1,3 +1,4 @@
+<%@page import="common.JSFunction"%>
 <%@page import="board.boardDTO"%>
 <%@page import="java.util.List"%>
 <%@page import="java.util.HashMap"%>
@@ -6,12 +7,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%
-boardDAO dao = new boardDAO(application);
-
-Map<String, Object> param = new HashMap<String, Object>();
-int totalCount = dao.selectCount(param, "review");
-List<boardDTO> boardLists = dao.selectList(param, "review");
-dao.close();
+if(session.getAttribute("UserId")==null){
+	JSFunction.alertLocation("로그인 후 이용가능합니다.",
+							"./login.jsp",out);
+	return;
+}
 %>
 <!DOCTYPE html>
 <html>
@@ -60,106 +60,81 @@ dao.close();
 
 <div class="sub_container_wrap">
 	<div class="sub_program_wrap">
-		<h3 class="program_title">진료 후기</h3>
+		<h3 class="program_title">공지사항 - 글쓰기</h3>
 <script language="JavaScript" src="./review_files/window.js.다운로드"></script>
 <script language="JavaScript" src="./review_files/document.js.다운로드"></script>
 <link type="text/css" rel="stylesheet" href="./review_files/hw_css.css">
 
 
 <div class="newb_wrap">
-	<div class="newb_search_wrap">
-		
-		<div class="newb_search">
-			<form name="sform" action="" method="post" id="sform">
-				<select name="field" class="newb_search_select">
-					<option value="all">전체</option>
-					<option value="title">제목</option>
-					<option value="contents">내용</option>
-					<option value="name">작성자</option>
-				</select>
-				<input type="text" name="search" class="newb_search_input" placeholder="검색어를 입력해 주세요." value="">
-				<input type="submit" value="검색" onclick="" class="newb_search_btn">
-			</form>
-		</div>
-	</div>
-
+<style>
+td{ top-padding: 2px;}
+</style>
 
 	<div class="newb_list_wrap">
-		<form action="" method="post" name="checkform" style="margin:0">
-			<table border="0" cellpadding="0" cellspacing="0" class="newb_table">
+		<form action="./writeProcess.jsp" method="post" name="checkform">
+		 <input type="hidden" name="boardkind" value="qna">
+			<table border="0" cellpadding="0" cellspacing="0" class="newb_table1">
 				<colgroup>
 					<col width="15%">
 					<col width="40%">
-					<col width="15%">
-					<col width="15%">
-					<col width="15%">
 				</colgroup>
-				<thead>
+				<tbody style="font-size:16px;">
+				<br>
 					<tr>
-						<th>번호</th>
-						<th>제목</th>
-						<th>작성자</th>
-						<th>작성일</th>
-						<th>조회수</th>
+						<th class="text-center" 
+                            style="vertical-align:middle;">작성자</th>
+						<td>
+                            <input type="text" class="form-control"
+                                style="width:100px;" readOnly 
+                                value = "<%=session.getAttribute("UserId").toString()%>" />
+                        </td>
 					</tr>
-				</thead>
-				<tbody>
-			 	<%
-                if(boardLists.isEmpty()){
-           		%>
-                   	<tr>
-                   		<td colspan="5" align="center">
-                   			등록된 게시물이 없습니다.
-                   		</td>
-                   	</tr>
-                    
-                <%
-                }
-                else{
-                	int virtualNum = 0;
-                	for(boardDTO dto : boardLists){
-                		virtualNum = totalCount--;
-			 	%>
 					<tr>
-						<td>
-							<div class="info_inner">
-								<%=virtualNum%>
-							</div>
-						</td>
-						<td>
-							<div class="info_inner">
-								<a href="View.jsp?num=<%= dto.getNum()%>" onclick="loginalr();"><%=dto.getTitle() %></a>
-							</div>
-						</td>
-						<td>
-							<div class="info_inner">
-								<%=dto.getId() %>
-							</div>
-						</td>
-						<td>
-							<div class="info_inner">
-								<%=dto.getPostdate() %>
-							</div>
-						</td>
-						<td>
-							<div class="info_inner">
-								<%=dto.getVisitcount() %>
-							</div>
-						</td>
-					</tr>
-					<%
-                		}
-                	}
-					%>
-					
+                        <th class="text-center" 
+                            style="vertical-align:middle;">제목</th>
+                        <td>
+                            <input type="text" class="form-control" name="title">
+                        </td>
+                    </tr>
+					<tr>
+                        <th class="text-center" 
+                            style="vertical-align:middle;">내용</th>
+                        <td>
+                            <textarea row="5" class="form-control" name="content"></textarea>
+                        </td>
+                    </tr>
+					<tr>
+                        <th class="text-center" 
+                            style="vertical-align:middle;">첨부파일</th>
+                        <td>
+                            <input type="file" class="form-control" name="ofile"/>
+                        </td>
+                    </tr>
 					
 				</tbody>
 			</table>
 
-
+<style>
+.btn_write{
+	cursor: pointer;
+    display: inline-block;
+    padding: 9px 18px;
+    font-size: 13px;
+    text-align: center;
+    color: #fff;
+    background-color: #747474;
+    box-sizing: border-box;
+    border-radius: 5px;
+    border: 0;
+    margin-top: -4px;
+ }
+</style>
 			<div class="newb_btn_wrap">
-				<a href="review_board.jsp" class="btn_write">목록</a>
-				<a href="./review_write.jsp" class="btn_write">글쓰기</a>
+				<button type="button" class="btn_write"
+                        onclick="location.href='review_board.jsp'">목록</button>
+	            <button type="submit" class="btn_write">작성완료</button>
+	            <button type="reset" class="btn_write">리셋</button>
 			</div>
 		</form>
 
@@ -177,10 +152,8 @@ dao.close();
 	</div>
 
 </div>
-<style media="screen">
-	.info_inner a{color:#000; display:flex;}
-	.info_inner{font-size:16px;}
-</style>
+
+
 	</div>
 </div>
 
