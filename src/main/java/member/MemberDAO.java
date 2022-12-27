@@ -48,6 +48,7 @@ public class MemberDAO  extends JDBConnect{
 				dto.setRegidate(rs.getString(4));
 				dto.setPhone(rs.getString(5));
 				dto.setEmail(rs.getString(6));
+				dto.setManager(rs.getInt("manager"));
 			}
 		}
 		catch (Exception e) {

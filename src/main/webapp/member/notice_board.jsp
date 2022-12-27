@@ -1,3 +1,4 @@
+<%@page import="member.MemberDTO"%>
 <%@page import="member.MemberDAO"%>
 <%@page import="board.boardDTO"%>
 <%@page import="java.util.List"%>
@@ -86,7 +87,8 @@ dao.close();
 
 
 	<div class="newb_list_wrap">
-		<form action="" method="post" name="checkform" style="margin:0">
+		<form action="./Write.jsp" method="post" name="checkform" style="margin:0">
+		<input type="hidden" name="boardkind" value="notice">
 			<table border="0" cellpadding="0" cellspacing="0" class="newb_table">
 				<colgroup>
 					<col width="15%">
@@ -129,7 +131,7 @@ dao.close();
 						</td>
 						<td>
 							<div class="info_inner">
-								<a href="View.jsp?num=<%= dto.getNum()%>" onclick="loginalr();"><%=dto.getTitle() %></a>
+								<a href="View.jsp?num=<%= dto.getNum()%>&boardkind=<%=dto.getBoardkind() %>" onclick="loginalr();"><%=dto.getTitle() %></a>
 							</div>
 						</td>
 						<td>
@@ -158,9 +160,16 @@ dao.close();
 			</table>
 
 
+<!-- 관리자일떄만 보이게 하려함./ 주석 풀면 로그인 되어있지 않을떄 nullpoint예외가 발생함 -->
 			<div class="newb_btn_wrap">
-				<a href="review_board.jsp" class="btn_write">목록</a>
-				<a href="./notice_write.jsp" class="btn_write">글쓰기</a>
+				<a href="notice_board.jsp" class="btn_write">목록</a>
+<%--  <%
+if(Integer.parseInt(session.getAttribute("UserManager").toString())==1){
+%>  --%>
+				<input type="submit" class="btn_write" value="글쓰기">
+<%--  <%
+}
+%>  --%>
 			</div>
 		</form>
 

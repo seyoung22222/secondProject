@@ -1,26 +1,27 @@
-<%@page import="com.oreilly.servlet.multipart.DefaultFileRenamePolicy"%>
-<%@page import="org.apache.tomcat.util.http.fileupload.FileUtils"%>
-<%@page import="com.oreilly.servlet.MultipartRequest"%>
-<%@page import="common.JSFunction"%>
-<%@page import="board.boardDAO"%>
 <%@page import="java.io.File"%>
 <%@page import="java.util.Date"%>
 <%@page import="java.text.SimpleDateFormat"%>
+<%@page import="com.oreilly.servlet.multipart.DefaultFileRenamePolicy"%>
+<%@page import="com.oreilly.servlet.MultipartRequest"%>
+<%@page import="board.boardDAO"%>
 <%@page import="board.boardDTO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ include file="./IsLoggedIn.jsp"%>
 <%
-//클라이언트가 작성한 폼값을 받는다.
-String title =request.getParameter("title");
+//수정폼에서 입력한 내용을 파라미터로 받는다.
+String num = request.getParameter("num");
+String title = request.getParameter("title");
 String content = request.getParameter("content");
 String ofile = request.getParameter("ofile");
 String boardkind = request.getParameter("boardkind");
 
-//폼값을 DTO객체에 저장한다.
+
+//DTO객체에 수정할 내용을 세팅한다.
 boardDTO dto = new boardDTO();
+dto.setNum(num);
 dto.setTitle(title);
 dto.setContent(content);
-dto.setBoardkind(boardkind);
 if(ofile != "") {
 	String saveDirectory = request.getServletContext().getRealPath("/Uploads_p");
 	int maxFileSize = 1024*1024*2;
@@ -42,17 +43,22 @@ if(ofile != "") {
 	dto.setNfile(newFileName);
 };
 dto.setId(session.getAttribute("UserId").toString());
-
+//DAO객체 생성을 통해 오라클에 연결한다.
 boardDAO dao = new boardDAO(application);
-
-int iResult = dao.insertWrite(dto);
-
+//update쿼리문을 실행하여 게시물을 수정한다.
+int affected = dao.updateEdit(dto);
+//자원해제
 dao.close();
-if (iResult == 1){
-	JSFunction.alertLocation(response, "글작성이 완료되었습니다.", "./"+boardkind+"_board.jsp");
-}else {
-	//실패했다면 재입력을 위해 글쓰기 페이지로 다시 돌아간다.
-   JSFunction.alertBack("글쓰기에 실패하였습니다", out);
-}
 
+if(affected ==1){
+	/* 
+	수정이 완료되었으면 수정된 내용을 확인하기 위해 주로 내용보기
+	페이지로 이동한다.
+	*/
+	JSFunction.alertLocation(response, "글수정이 완료되었습니다.", "./"+boardkind+"_board.jsp");
+}
+else{
+	//수정에 실패하면 뒤로 이동한다.
+	JSFunction.alertBack("수정하기에 실패하였습니다", out);
+}
 %>

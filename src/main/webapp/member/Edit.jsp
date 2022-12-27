@@ -7,11 +7,18 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%
-if(session.getAttribute("UserId")==null){
-	JSFunction.alertLocation("로그인 후 이용가능합니다.",
-							"./login.jsp",out);
+String num = request.getParameter("num");
+boardDAO dao = new boardDAO(application);
+boardDTO dto = dao.selectView(num);
+String sessionId = session.getAttribute("UserId").toString();
+if(!sessionId.equals(dto.getId())){
+	JSFunction.alertBack("작성자 본인만 수정할 수 있습니다.", out);
 	return;
 }
+String boardkind = dto.getBoardkind();
+System.out.print(boardkind);
+dao.close();
+
 %>
 <!DOCTYPE html>
 <html>
@@ -60,7 +67,25 @@ if(session.getAttribute("UserId")==null){
 
 <div class="sub_container_wrap">
 	<div class="sub_program_wrap">
-		<h3 class="program_title">공지사항 - 글쓰기</h3>
+		<h3 class="program_title">
+<%
+if(boardkind.equals("review")){ 
+%>
+		진료 후기 - 수정하기</h3>
+<%
+}
+else if(boardkind.equals("qna")){
+%>
+		 질문방 - 수정하기</h3>
+<%
+} 
+else if(boardkind.equals("notice")){
+%>
+		 공지사항 - 수정하기</h3>
+<%
+} 
+%>		
+		
 <script language="JavaScript" src="./review_files/window.js.다운로드"></script>
 <script language="JavaScript" src="./review_files/document.js.다운로드"></script>
 <link type="text/css" rel="stylesheet" href="./review_files/hw_css.css">
@@ -72,8 +97,9 @@ td{ top-padding: 2px;}
 </style>
 
 	<div class="newb_list_wrap">
-		<form action="./writeProcess.jsp" method="post" name="checkform">
-		 <input type="hidden" name="boardkind" value="qna">
+		<form action="./EditProcess.jsp" method="post" name="checkform">
+		 <input type="hidden" name="num" value="<%=dto.getNum()%>">
+		 <input type="hidden" name="boardkind" value="notice">
 			<table border="0" cellpadding="0" cellspacing="0" class="newb_table1">
 				<colgroup>
 					<col width="15%">
@@ -94,14 +120,15 @@ td{ top-padding: 2px;}
                         <th class="text-center" 
                             style="vertical-align:middle;">제목</th>
                         <td>
-                            <input type="text" class="form-control" name="title">
+                            <input type="text" class="form-control" name="title"
+                            value="<%=dto.getTitle() %>">
                         </td>
                     </tr>
 					<tr>
                         <th class="text-center" 
                             style="vertical-align:middle;">내용</th>
                         <td>
-                            <textarea row="5" class="form-control" name="content"></textarea>
+                            <textarea row="5" class="form-control" name="content"><%=dto.getContent() %></textarea>
                         </td>
                     </tr>
 					<tr>
@@ -130,10 +157,28 @@ td{ top-padding: 2px;}
     margin-top: -4px;
  }
 </style>
-			<div class="newb_btn_wrap">
-				<button type="button" class="btn_write"
-                        onclick="location.href='review_board.jsp'">목록</button>
-	            <button type="submit" class="btn_write">작성완료</button>
+						<div class="newb_btn_wrap">
+<%
+if(boardkind.equals("review")){ 
+%>
+		<button type="button" class="btn_write"
+                        onclick="location.href='./review_board.jsp'">목록</button>
+<%
+}
+else if(boardkind.equals("qna")){
+%>
+		 <button type="button" class="btn_write"
+                        onclick="location.href='./qna_board.jsp'">목록</button>
+<%
+} 
+else if(boardkind.equals("notice")){
+%>
+		 <button type="button" class="btn_write"
+                        onclick="location.href='./notice_board.jsp'">목록</button>
+<%
+} 
+%>
+	            <button type="submit" class="btn_write">수정완료</button>
 	            <button type="reset" class="btn_write">리셋</button>
 			</div>
 		</form>

@@ -5,6 +5,14 @@
 <%@page import="board.boardDAO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%
+String num = request.getParameter("num");
+String boardkind = request.getParameter("boardkind");
+boardDAO dao = new boardDAO(application);
+dao.updateVisitCount(num);
+boardDTO dto = dao.selectView(num);
+dao.close();
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -30,6 +38,24 @@
 <script src="./view_files/v3.js.다운로드"></script>
 <script charset="utf-8" src="./view_files/v3.js(1).다운로드"></script>
 <script src="./view_files/v3.js.다운로드"></script></head>
+<script>
+//게시물 삭제를 위한 Javascript 함수
+function deletePost(){
+   //confirm() 함수는 대화창에서 "예"를 누를때 true가 반환된다.
+   var confirmed = confirm("정말로 삭제하시겠습니까?");
+   if (confirmed){
+      //<form>의 name속성을 통해 DOm을 가져온다.
+      var form = document.writeFrm;
+      //전송방식과 폼값에 전송할 URL을 설정한다.
+      form.method = "post";
+      form.action = "DeleteProcess.jsp";
+      //submit() 함수를 통해 폼값을 전송한다.
+      form.submit();
+      //<form>태그 하위의 hidden박스에 설정된 일련번호가
+      //전송된다.
+   }
+}
+</script>
 </head>
 <body>
 <div id="document">
@@ -51,7 +77,24 @@
 
 	<div class="sub_container_wrap">
 	<div class="sub_program_wrap">
-		<h3 class="program_title">진료 후기</h3>
+		<h3 class="program_title">
+<%
+if(boardkind.equals("review")){ 
+%>
+		진료 후기</h3>
+<%
+}
+else if(boardkind.equals("qna")){
+%>
+		 질문방</h3>
+<%
+} 
+else if(boardkind.equals("notice")){
+%>
+		 공지사항</h3>
+<%
+} 
+%>
 <script language="JavaScript" src="./review_files/window.js.다운로드"></script>
 <script language="JavaScript" src="./review_files/document.js.다운로드"></script>
 <script language="JavaScript" src="./review_files/cookie.js.다운로드"></script>
@@ -59,40 +102,68 @@
 
 
 
-
+<form name="writeFrm">
 <div class="media_gallery_wrap">
-
+<input type="hidden" name="num" value="<%= dto.getNum()%>" />  
+<input type="hidden" name="id" value="<%= dto.getId() %>" />  
+<input type="hidden" name="boardkind" value="<%= dto.getBoardkind() %>" />  
 	<div class="media_gallery_view_wrap">
 		<table border="0" cellpadding="0" cellspacing="0" class="media_gallery_view_table">
 			<tbody>
 				<tr>
 					<th>제목</th>
-					<td class="view_title">서울신세계안과 겨울이벤트!</td>
+					<td class="view_title"><%=dto.getTitle().replace("\r\n", "<br/>") %></td>
 				</tr>
 				<tr>
 					<th>작성자</th>
-					<td>서울신세계안과</td>
+					<td><%=dto.getId() %></td>
 				</tr>
 				<tr>
 					<th>작성일</th>
-					<td>2022-12-01 10:13:28</td>
+					<td><%=dto.getPostdate() %></td>
 				</tr>
 				<tr>
 					<th>내용</th>
-					<td>내용을 작성해봅시다</td>
+					<td>
+					<%=dto.getContent().replace("\r\n", "<br/>") %>
+					<p>
+                		<img src="../Uploads_p/<%=dto.getNfile() %>" >
+                	</p>
+					</td>
 				</tr>
+<%
+if(boardkind.equals("review")||boardkind.equals("qna")){ 
+%>
 				<tr>
 					<th>첨부파일</th>
-					<td>2이건 첨부파일8</td>
+					<td><%=dto.getOfile() %></td>
 				</tr>
-				
-
+<%
+}
+%>
 				</tbody>
 		</table>
-	</div>
-	</div>
 
+	</div>
+	</div>
+	<div style = "padding-left:75%; padding-top: 10px; ">
+    <button type="button" onclick="location.href='./<%=dto.getBoardkind() %>_board.jsp';">
+        목록 보기
+    </button>
+<% 
+if(session.getAttribute("UserId")!=null &&
+   dto.getId().equals(session.getAttribute("UserId").toString())){
+%>
+    <button type="button" onclick="location.href='Edit.jsp?num=<%=dto.getNum() %>';">
+    수정하기</button>
+    <button type="button" onclick="deletePost();">삭제하기</button> 
+<%
+}
+
+%>
+	</div>
 </div>
+<form/>
 </content>
 <!---------------------------------------------------------------------------------->
 <!---------------------------------------------------------------------------------->

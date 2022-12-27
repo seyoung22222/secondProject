@@ -13,6 +13,7 @@ public class boardDTO {
 	private int downcount;
 	private String comment;
 	private String boardkind;
+	private String name;
 	
 	
 	public String getNum() {
@@ -80,5 +81,11 @@ public class boardDTO {
 	}
 	public void setBoardkind(String boardkind) {
 		this.boardkind = boardkind;
+	}
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
 	}
 }
