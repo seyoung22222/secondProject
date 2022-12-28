@@ -101,7 +101,6 @@ else if(boardkind.equals("notice")){
 <link href="./view_files/hw_css.css" rel="stylesheet" type="text/css">
 
 
-
 <form name="writeFrm">
 <div class="media_gallery_wrap">
 <input type="hidden" name="num" value="<%= dto.getNum()%>" />  
@@ -118,7 +117,7 @@ else if(boardkind.equals("notice")){
 					<th>작성자</th>
 					<td><%=dto.getId() %></td>
 				</tr>
-				<tr>
+				<tr class="line">
 					<th>작성일</th>
 					<td><%=dto.getPostdate() %></td>
 				</tr>
@@ -126,9 +125,17 @@ else if(boardkind.equals("notice")){
 					<th>내용</th>
 					<td>
 					<%=dto.getContent().replace("\r\n", "<br/>") %>
+<%
+if(boardkind.equals("review")||boardkind.equals("qna")){ 
+	if(dto.getNfile() != null){
+%>
 					<p>
-                		<img src="../Uploads_p/<%=dto.getNfile() %>" >
+                		<img src="../Uploads_p/<%=dto.getNfile() %>" style="width: 500px; height: 700px;" >
                 	</p>
+<%
+	}
+}
+%>
 					</td>
 				</tr>
 <%
@@ -136,7 +143,18 @@ if(boardkind.equals("review")||boardkind.equals("qna")){
 %>
 				<tr>
 					<th>첨부파일</th>
-					<td><%=dto.getOfile() %></td>
+<%
+if(dto.getOfile() != null){
+%>
+					<td><%=dto.getOfile() %> <a href="./DownloadProcess.jsp?ofile=<%=dto.getOfile() %>&nfile=<%=dto.getNfile() %>&num=<%=dto.getNum() %>">
+                [다운로드]</a></td>
+<%
+}else{
+%>
+					<td>없음</td>
+<%
+}
+%>
 				</tr>
 <%
 }
@@ -146,17 +164,32 @@ if(boardkind.equals("review")||boardkind.equals("qna")){
 
 	</div>
 	</div>
-	<div style = "padding-left:75%; padding-top: 10px; ">
-    <button type="button" onclick="location.href='./<%=dto.getBoardkind() %>_board.jsp';">
+<style>
+.view-btn{
+vertical-align: middle;
+    display: inline-block;
+    text-decoration: none;
+    padding: 9px 18px;
+    font-size: 13px;
+    text-align: center;
+    color: #fff;
+    background-color: #747474;
+    box-sizing: border-box;
+    border-radius: 5px;
+    border: 0;
+}
+</style>
+	<div style = "padding-left:73%; padding-top: 10px; ">
+    <button type="button" class="view-btn" onclick="location.href='./<%=dto.getBoardkind() %>_board.jsp';">
         목록 보기
     </button>
 <% 
 if(session.getAttribute("UserId")!=null &&
    dto.getId().equals(session.getAttribute("UserId").toString())){
 %>
-    <button type="button" onclick="location.href='Edit.jsp?num=<%=dto.getNum() %>';">
+    <button type="button" class="view-btn" onclick="location.href='Edit.jsp?num=<%=dto.getNum() %>';">
     수정하기</button>
-    <button type="button" onclick="deletePost();">삭제하기</button> 
+    <button type="button" class="view-btn" onclick="deletePost();">삭제하기</button> 
 <%
 }
 

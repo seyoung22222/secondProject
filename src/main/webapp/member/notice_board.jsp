@@ -11,6 +11,14 @@
 boardDAO dao = new boardDAO(application);
 
 Map<String, Object> param = new HashMap<String, Object>();
+String field = request.getParameter("field");
+String search = request.getParameter("search");
+//사용자가 입력한 검색어가 있다면..
+if(search != null){
+	/* Map컬렉션에 컬럼명과 검색어를 추가한다. */
+	param.put("field", field);
+	param.put("search", search);
+}
 int totalCount = dao.selectCount(param, "notice");
 List<boardDTO> boardLists = dao.selectList(param, "notice");
 dao.close();
@@ -72,7 +80,7 @@ dao.close();
 	<div class="newb_search_wrap">
 		
 		<div class="newb_search">
-			<form name="sform" action="" method="post" id="sform">
+			<form name="sform" action="" method="get" id="sform">
 				<select name="field" class="newb_search_select">
 					<option value="all">전체</option>
 					<option value="title">제목</option>
@@ -131,7 +139,7 @@ dao.close();
 						</td>
 						<td>
 							<div class="info_inner">
-								<a href="View.jsp?num=<%= dto.getNum()%>&boardkind=<%=dto.getBoardkind() %>" onclick="loginalr();"><%=dto.getTitle() %></a>
+								<a href="View.jsp?num=<%= dto.getNum()%>&boardkind=<%=dto.getBoardkind() %>" onclick="loginalr();"><%=dto.getTitle().replace("\r\n", "<br/>") %></a>
 							</div>
 						</td>
 						<td>
@@ -163,13 +171,13 @@ dao.close();
 <!-- 관리자일떄만 보이게 하려함./ 주석 풀면 로그인 되어있지 않을떄 nullpoint예외가 발생함 -->
 			<div class="newb_btn_wrap">
 				<a href="notice_board.jsp" class="btn_write">목록</a>
-<%--  <%
-if(Integer.parseInt(session.getAttribute("UserManager").toString())==1){
-%>  --%>
+<%
+if(session.getAttribute("UserId") != null && Integer.parseInt(session.getAttribute("UserManager").toString())==1){
+%> 
 				<input type="submit" class="btn_write" value="글쓰기">
-<%--  <%
+<%
 }
-%>  --%>
+%>
 			</div>
 		</form>
 

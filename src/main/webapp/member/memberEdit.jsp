@@ -1,16 +1,20 @@
 <%@page import="member.MemberDTO"%>
 <%@page import="member.MemberDAO"%>
-<%@page import="board.boardDTO"%>
-<%@page import="board.boardDAO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%
+MemberDAO dao = new MemberDAO(application);
+
+String sessionId = session.getAttribute("UserId").toString();
+MemberDTO dto = dao.selectMember(sessionId);
+dao.close();
+
+%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>청담한빛안과</title>
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
 <link rel="stylesheet" media="all" href="./회원가입_files_files/animate.css">
 <link rel="stylesheet" media="all" href="./회원가입_files_files/jquery.bxslider.css">
 <link rel="stylesheet" media="all" href="./회원가입_files_files/slick.css">
@@ -29,13 +33,7 @@
 <script type="text/javascript" src="./회원가입_files_files/common.js.다운로드"></script>
 <link rel="stylesheet" media="all" href="./회원가입_files_files/common.css">
 <link rel="stylesheet" media="all" href="./회원가입_files_files/sub.css">
-<!-- <script type="text/javascript">
-function id_check(frm) {
-	
-	window.open("./idCheckModal.jsp?id="+frm.id.value,"idover", "width=300, height=300, left=0, top=0");
-}
-</script> -->
-</head>
+
 <body>
 <div id="document">
 
@@ -49,23 +47,38 @@ function id_check(frm) {
 
 
 
+
 <div class="sub_container_wrap">
 	<div class="sub_program_wrap">
-		<h3 class="program_title">회원가입</h3>
-
+		<h3 class="program_title">회원정보수정</h3>
 <script language="JavaScript" src="./회원가입_files_files/window.js.다운로드"></script>
 <script language="JavaScript" src="./회원가입_files_files/document.js.다운로드"></script>
 <script language="JavaScript" src="./회원가입_files_files/cookie.js.다운로드"></script>
 <link href="./회원가입_files_files/hw_css.css" rel="stylesheet" type="text/css">
 <script type="text/javascript" src="./회원가입_files_files/id_ajax.js.다운로드"></script>
+
 		<div class="member_login_wrap">
 			<form name="mform" method="post"
-				action="./signupProcess.jsp" onsubmit="return formcheck(this)">
+				action="./memberEditProcess.jsp" onsubmit="return formcheck(this)">
+				<input type="hidden" name="adminretuen_url" value="/member/join.php">
+				<input type="hidden" name="adminreturn_value" value="group=basic|m1=|m2=join">
+				<input type="hidden" name="group" value="basic">
+				<input type="hidden" name="asumode" value="">
+				<input type="hidden" name="asmmode" value="join">
 		
-				<div class="member_login_title">
-					<h3>홈페이지 방문을 환영합니다.</h3>
-					<p>회원가입하신 후 다양한 컨텐츠와 웹서비스를 이용해 보세요. </p>
-				</div>
+				<input type="hidden" name="m1" value="">
+				<input type="hidden" name="m2" value="">
+		
+				<input type="hidden" name="retuen_url" value="/member/join.php">
+				<input type="hidden" name="return_value" value="">
+				<input type="hidden" name="ammode" value="joindb">
+				<input type="hidden" name="no" value="">
+				<input type="hidden" name="area" value="">
+		
+				<input type="hidden" name="idcheck" value="0">
+				<input type="hidden" name="nicnamecheck" value="0">
+				<input type="hidden" name="checkvalue" value="">
+				<input type="hidden" name="join_type" value="id">
 		
 				<div class="join_register_wrap">
 		
@@ -78,42 +91,9 @@ function id_check(frm) {
 							<tr>
 								<th><span>(　<strong>*</strong>)</span> 아이디</th>
 								<td>
-									<input type="text" name="id" maxlength="20" class="join_text join_id" value="" id="chk_id">
-									<span id="id_chk_msg">
-									
-										<button type="button" data-bs-toggle="modal" data-bs-target="#myModal" 
-											class="btn btn-primary btn-sm btn-secondary" style="margin-left: 10px;">
-									    	중복확인
-									   </button>
-									   
-									   
-									   <div class="modal" id="myModal">
-										    <div class="modal-dialog modal-dialog-centered">
-										    <div class="modal-content">
-										
-										      <!-- Modal Header -->
-										      <div class="modal-header">
-										        <h2 class="modal-title"><b>아이디 중복확인 창</b></h2>
-										        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-										      </div>
-									
-										      <!-- Modal body -->
-										      <div class="modal-body">
-										        사용 가능한 아이디입니다. 
-			      			
-						        
-										      </div>
-										
-										      <!-- Modal footer -->
-										      <div class="modal-footer">
-										        <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Close</button>
-										      </div>
-										
-										    </div>
-										  </div>
-										</div>
-										
-									</span>
+									<input type="text" name="id" maxlength="20" class="join_text join_id" 
+										value="<%=dto.getId() %>" id="chk_id" readOnly>
+									<span id="id_chk_msg"></span>
 								</td>
 							</tr>
 							<tr>
@@ -134,7 +114,8 @@ function id_check(frm) {
 							<tr>
 								<th><span>(　<strong>*</strong>)</span> 이름</th>
 								<td>
-									<input type="text" id="name" name="name" maxlength="20" class="join_text join_name" value="">
+									<input type="text" id="name" name="name" maxlength="20" class="join_text join_name" 
+										value="<%=dto.getName()%>">
 								</td>
 							</tr>
 							 
@@ -150,9 +131,11 @@ function id_check(frm) {
 										<option value="019">019</option>
 									</select>
 									-
-									<input type="text" id="htel2" name="htel2" maxlength="4" class="join_text join_hp_sec" value="">
+									<input type="text" id="htel2" name="htel2" maxlength="4" class="join_text join_hp_sec" 
+										value="<%=dto.getPhone().substring(dto.getPhone().indexOf("-")+1, dto.getPhone().lastIndexOf("-"))%>">
 									-
-									<input type="text" id="htel3" name="htel3" maxlength="4" class="join_text join_hp_sec" value="">
+									<input type="text" id="htel3" name="htel3" maxlength="4" class="join_text join_hp_sec" 
+										value="<%=dto.getPhone().substring(dto.getPhone().lastIndexOf("-")+1) %>">
 									<span class="input_explain">
 										<label for="join_sms_chk">
 											<input type="checkbox" name="infosms" value="1" id="join_sms_chk" class="join_sms_chk" checked="">
@@ -164,7 +147,8 @@ function id_check(frm) {
 							<tr>
 								<th>&ensp;&ensp;&ensp; 이메일</th>
 								<td>
-									<input type="text" id="" name="email" maxlength="30" class="join_text join_email" >
+									<input type="text" id="" name="email" maxlength="30" class="join_text join_email"
+										value="<%=dto.getEmail().substring(0, dto.getEmail().indexOf("@")) %>" >
 									@
 									<select class="join_text join_email" id="chk_email" name="emailaddr">
 										<option value="naver">naver.com</option>
@@ -183,11 +167,12 @@ function id_check(frm) {
 							<tr>
 								<td colspan="2">
 									<div class="join_btn_wrap">
-									<input type="submit" value="가입하기">
+									<input type="submit" value="정보수정">
 									<a href="javascript:history.back()"><span>이전단계</span></a>
 									</div>
 								</td>
 							</tr>
+		
 						</tbody>
 					</table>
 		
@@ -196,6 +181,9 @@ function id_check(frm) {
 			</form>
 		</div>
 	</div>
+
+
+
 
 </content>
 <!---------------------------------------------------------------------------------->

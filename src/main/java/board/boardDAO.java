@@ -18,7 +18,7 @@ public class boardDAO extends JDBConnect{
 		   int totalCount = 0;
 		   
 		   String query = "SELECT COUNT(*) FROM board "
-		   		+ " WHERE boardkind like '"+ boardkind + "' ";
+		   		+ " WHERE boardkind ='"+ boardkind+"' ";
 		   if(map.get("search") != null) {
 			   query += " && "+ map.get("field") 
 			   + " LIKE '%"+ map.get("search")+ "%'";
@@ -42,7 +42,7 @@ public class boardDAO extends JDBConnect{
 	      List<boardDTO> bbs = new Vector<boardDTO>();
 	      
 	      String query = "SELECT * FROM board "
-			   		+ " WHERE  boardkind like '"+ boardkind + "' ";
+			   		+ " WHERE  boardkind ='"+ boardkind+"' ";
 			   if(map.get("search") != null) {
 				   query += " && "+ map.get("field") 
 				   + " LIKE '%"+ map.get("search")+ "%'";
@@ -193,6 +193,7 @@ public class boardDAO extends JDBConnect{
 			   psmt.setString(5, dto.getNum());
 			   //수정된 레코드의 갯수가 반환된다.
 			   result = psmt.executeUpdate();
+			   System.out.print(result);
 		   }
 		   catch (Exception e) {
 			   System.out.println("게시물 수정 중 예외 발생");

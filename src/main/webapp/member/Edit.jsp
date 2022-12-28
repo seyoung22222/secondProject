@@ -16,7 +16,6 @@ if(!sessionId.equals(dto.getId())){
 	return;
 }
 String boardkind = dto.getBoardkind();
-System.out.print(boardkind);
 dao.close();
 
 %>
@@ -97,9 +96,11 @@ td{ top-padding: 2px;}
 </style>
 
 	<div class="newb_list_wrap">
-		<form action="./EditProcess.jsp" method="post" name="checkform">
+		<form action="./EditProcess.jsp" method="post" name="checkform" enctype="multipart/form-data">
 		 <input type="hidden" name="num" value="<%=dto.getNum()%>">
-		 <input type="hidden" name="boardkind" value="notice">
+		 <input type="hidden" name="boardkind" value="<%=boardkind%>">
+		 <input type="hidden" name="prevOfile" value="<%=dto.getOfile()%>">
+    	 <input type="hidden" name="prevNfile" value="<%=dto.getNfile()%>">
 			<table border="0" cellpadding="0" cellspacing="0" class="newb_table1">
 				<colgroup>
 					<col width="15%">

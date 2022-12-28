@@ -91,8 +91,8 @@ td{ top-padding: 2px;}
 </style>
 
 	<div class="newb_list_wrap">
-		<form action="./writeProcess.jsp" method="post" name="checkform">
-		 <input type="hidden" name="boardkind" value="notice">
+		<form action="./writeProcess.jsp" method="post" name="checkform" enctype="multipart/form-data">
+		 <input type="hidden" name="boardkind" value="<%=boardkind%>">
 			<table border="0" cellpadding="0" cellspacing="0" class="newb_table1">
 				<colgroup>
 					<col width="15%">
@@ -104,7 +104,7 @@ td{ top-padding: 2px;}
 						<th class="text-center" 
                             style="vertical-align:middle;">작성자</th>
 						<td>
-                            <input type="text" class="form-control"
+                            <input type="text" class="form-control" name="id"
                                 style="width:100px;" readOnly 
                                 value = "<%=session.getAttribute("UserId").toString()%>" />
                         </td>

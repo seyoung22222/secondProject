@@ -5,12 +5,24 @@
 <%@page import="board.boardDAO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+
 <%
 boardDAO dao = new boardDAO(application);
 
 Map<String, Object> param = new HashMap<String, Object>();
+String field = request.getParameter("field");
+String search = request.getParameter("search");
+//사용자가 입력한 검색어가 있다면..
+if(search != null){
+	/* Map컬렉션에 컬럼명과 검색어를 추가한다. */
+	param.put("field", field);
+	param.put("search", search);
+}
 int totalCount = dao.selectCount(param, "qna");
 List<boardDTO> boardLists = dao.selectList(param, "qna");
+
+
+
 dao.close();
 %>
 <!DOCTYPE html>
@@ -99,7 +111,8 @@ function allCheck(cform){
 	<div class="newb_list_wrap" style="border:none; width:1050px">
 		<div class="faq_search_wrap">
 			<div class="faq_search">
-				<form name="sform" action="" method="post" id="sform">
+				<form name="sform" action="" method="get" id="sform">
+				<input type="hidden" name="boardkind" value="qna">
 					<select name="field" class="faq_search_select">
 						<option value="all">전체</option>
 						<option value="title">제목</option>
@@ -164,7 +177,7 @@ function allCheck(cform){
 						</td>
 						<td>
 							<div class="info_inner">
-								<a href="View.jsp?num=<%= dto.getNum()%>&boardkind=<%=dto.getBoardkind() %>" onclick="loginalr();"><%=dto.getTitle() %></a>
+								<a href="View.jsp?num=<%= dto.getNum()%>&boardkind=<%=dto.getBoardkind() %>" onclick="loginalr();"><%=dto.getTitle().replace("\r\n", "<br/>") %></a>
 							</div>
 						</td>
 						<td>
