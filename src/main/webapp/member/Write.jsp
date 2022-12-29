@@ -12,6 +12,7 @@ if(session.getAttribute("UserId")==null){
 							"./login.jsp",out);
 	return;
 }
+String boardkind = request.getParameter("boardkind");
 %>
 <!DOCTYPE html>
 <html>
@@ -60,7 +61,25 @@ if(session.getAttribute("UserId")==null){
 
 <div class="sub_container_wrap">
 	<div class="sub_program_wrap">
-		<h3 class="program_title">공지사항 - 글쓰기</h3>
+		<h3 class="program_title">
+<%
+if(boardkind.equals("review")){ 
+%>
+		진료 후기 - 글쓰기</h3>
+<%
+}
+else if(boardkind.equals("qna")){
+%>
+		 질문방 - 글쓰기</h3>
+<%
+} 
+else if(boardkind.equals("notice")){
+%>
+		 공지사항 - 글쓰기</h3>
+<%
+} 
+%>		
+		
 <script language="JavaScript" src="./review_files/window.js.다운로드"></script>
 <script language="JavaScript" src="./review_files/document.js.다운로드"></script>
 <link type="text/css" rel="stylesheet" href="./review_files/hw_css.css">
@@ -72,8 +91,8 @@ td{ top-padding: 2px;}
 </style>
 
 	<div class="newb_list_wrap">
-		<form action="./writeProcess.jsp" method="post" name="checkform">
-		 <input type="hidden" name="boardkind" value="qna">
+		<form action="./writeProcess.jsp" method="post" name="checkform" enctype="multipart/form-data">
+		 <input type="hidden" name="boardkind" value="<%=boardkind%>">
 			<table border="0" cellpadding="0" cellspacing="0" class="newb_table1">
 				<colgroup>
 					<col width="15%">
@@ -85,7 +104,7 @@ td{ top-padding: 2px;}
 						<th class="text-center" 
                             style="vertical-align:middle;">작성자</th>
 						<td>
-                            <input type="text" class="form-control"
+                            <input type="text" class="form-control" name="id"
                                 style="width:100px;" readOnly 
                                 value = "<%=session.getAttribute("UserId").toString()%>" />
                         </td>
@@ -131,8 +150,26 @@ td{ top-padding: 2px;}
  }
 </style>
 			<div class="newb_btn_wrap">
-				<button type="button" class="btn_write"
-                        onclick="location.href='review_board.jsp'">목록</button>
+<%
+if(boardkind.equals("review")){ 
+%>
+		<button type="button" class="btn_write"
+                        onclick="location.href='./review_board.jsp'">목록</button>
+<%
+}
+else if(boardkind.equals("qna")){
+%>
+		 <button type="button" class="btn_write"
+                        onclick="location.href='./qna_board.jsp'">목록</button>
+<%
+} 
+else if(boardkind.equals("notice")){
+%>
+		 <button type="button" class="btn_write"
+                        onclick="location.href='./notice_board.jsp'">목록</button>
+<%
+} 
+%>
 	            <button type="submit" class="btn_write">작성완료</button>
 	            <button type="reset" class="btn_write">리셋</button>
 			</div>

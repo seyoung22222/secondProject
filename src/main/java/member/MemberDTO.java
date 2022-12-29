@@ -12,7 +12,7 @@ public class MemberDTO {
 	private String id;
 	private String pass;
 	private String name;
-	private String regidate;
+	private java.sql.Date regidate;
 	private String phone;
 	private String email;
 	private int manager;
@@ -49,10 +49,10 @@ public class MemberDTO {
 	public void setName(String name) {
 		this.name = name;
 	}
-	public String getRegidate() {
+	public java.sql.Date getRegidate() {
 		return regidate;
 	}
-	public void setRegidate(String regidate) {
+	public void setRegidate(java.sql.Date regidate) {
 		this.regidate = regidate;
 	}
 	public String getPhone() {

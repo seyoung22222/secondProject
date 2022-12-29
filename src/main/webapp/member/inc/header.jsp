@@ -24,7 +24,7 @@
 
 <div class="top_logo_header_wrap">
 	<div class="top_logo_header">
-	<h1><b></b><a href="./main.jsp" style="font-size:25px;">청담한빛안과</a></b></h1>
+	<h1><b><a href="./main.jsp" style="font-size:25px; color:#402152; font-family: serif; ">청담한빛안과</a></b></h1>
 <script type="text/javascript">
 $(document).ready(function(){
 	$('.gnb > .dep1').on('mouseenter', function(){
@@ -74,12 +74,11 @@ $(document).ready(function(){
 				<li class="dep1">
 					<a href="">청담한빛안과</a>
 					<div class="dep2_wrap">
-						<h3><a href="">청담한빛안과</a></h3>
+						<h3><a href="./About.jsp">청담한빛안과</a></h3>
 						<ul class="dep2">
-							<li><a href="">청담한빛안과</a></li>
+							<li><a href="./About.jsp">청담한빛안과</a></li>
 							<li><a href="">의료진소개</a></li>
-							<li><a href="">병원둘러보기</a></li>
-							<li><a href="">진료시간</a></li>
+							<li><a href="./Image.jsp">병원둘러보기</a></li>
 						</ul>
 					</div>
 				</li>
@@ -168,6 +167,11 @@ $(document).ready(function(){
 				<% } else { %>
 					<li>
 						♥ 반갑습니다. <%=session.getAttribute("UserName") %>님 ♥
+					</li>
+					<li>
+						<a href="./memberEdit.jsp">
+							회원정보수정
+						</a>
 					</li>
 					<li>
 						<a href="./logoutProcess.jsp">
