@@ -44,7 +44,7 @@ CREATE TABLE board(
 	comment TEXT
 );
 
-ALTER TABLE board ADD boardkind VARCHAR(30) NOT NULL ;
+ALTER TABLE board ADD boardkind VARCHboardmemberAR(30) NOT NULL ;
 DESC board;
 
 INSERT INTO board (title, content, id, boardkind)
@@ -52,4 +52,4 @@ INSERT INTO board (title, content, id, boardkind)
 
 SELECT * FROM board WHERE title LIKE '%제목%' && boardkind LIKE 'review';
 
-
+board
