@@ -119,10 +119,10 @@ else if(boardkind.equals("notice")){
 				</tr>
 				<tr class="line">
 					<th>작성일</th>
-					<td><%=dto.getPostdate() %></td>
+					<td><%=dto.getPostdate() %></td> 
 				</tr>
 				<tr>
-					<th>내용</th>
+					<th>내용</th>  
 					<td>
 					<%=dto.getContent().replace("\r\n", "<br/>") %>
 <%

@@ -139,7 +139,7 @@ dao.close();
 						</td>
 						<td>
 							<div class="info_inner">
-								<a href="View.jsp?num=<%= dto.getNum()%>&boardkind=<%=dto.getBoardkind() %>" onclick="loginalr();"><%=dto.getTitle().replace("\r\n", "<br/>") %></a>
+								<a href="View.jsp?num=<%= dto.getNum()%>&boardkind=<%=dto.getBoardkind() %>" onclick="loginalr();"><%=dto.getTitle().replace("\r\n", "<br>") %></a>
 							</div>
 						</td>
 						<td>

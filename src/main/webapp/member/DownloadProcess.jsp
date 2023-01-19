@@ -10,7 +10,7 @@
 	
 	
 	String fileName = request.getParameter("nfile");
-	String downLoadFile = "C:/02Workspaces/K08JSPServlet/.metadata/.plugins/org.eclipse.wst.server.core/tmp0/wtpwebapps/secondProject/Uploads_p/" + fileName; 
+	String downLoadFile = "C:/02Workspaces/K08JSPServlet/.metadata/.plugins/org.eclipse.wst.server.core/tmp0/wtpwebapps/project02/Uploads_p/" + fileName; 
 	
 	File file = new File(downLoadFile);
     FileInputStream in = new FileInputStream(downLoadFile);
