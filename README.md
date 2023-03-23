@@ -19,4 +19,3 @@ https://docs.google.com/presentation/d/1f6a7TqrBoajJFCVl68RmjdV2RV-eebAptKhzG2H9
 <li>회원인증</li>
 <li>오시는길(Kakao API 이용)</li>
 <li>커뮤니티</li>
-
